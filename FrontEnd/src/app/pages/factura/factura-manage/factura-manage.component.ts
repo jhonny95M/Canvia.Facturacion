@@ -5,6 +5,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from '@shared/services/alert.service';
 import { FacturaService } from 'src/app/services/factura.service';
+import icDelete from '@iconify/icons-ic/round-delete';
+
 
 @Component({
   selector: 'vex-factura-manage',
@@ -14,16 +16,17 @@ import { FacturaService } from 'src/app/services/factura.service';
 export class FacturaManageComponent implements OnInit {
 
   icClose = icClose
+  icDelete = icDelete
   configs = configs
   form: FormGroup
   constructor(@Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder,
     private alert: AlertService,
     private facturaService: FacturaService,
-    public dialogRef: MatDialogRef<FacturaManageComponent>) { 
-      this.initForm()
+    public dialogRef: MatDialogRef<FacturaManageComponent>) {
+    this.initForm()
 
-    }
+  }
 
   ngOnInit(): void {
     if (this.data != null) {
@@ -35,6 +38,7 @@ export class FacturaManageComponent implements OnInit {
     this.facturaService.FacturaById(categoryId).subscribe(
       (res) => {
         this.form.reset({
+          facturaID:res.facturaID,
           clienteID: res.clienteID,
           fechaEmision: res.fechaEmision,
           descripcion: res.descripcion,
@@ -46,33 +50,31 @@ export class FacturaManageComponent implements OnInit {
   initForm(): void {
 
     this.form = this.fb.group({
+      facturaID:[0],
       clienteID: [0, [Validators.required]],
       fechaEmision: ['', Validators.required],
       descripcion: [''],
-      items: this.fb.array([{
-        descripcion: ["string",[Validators.required]],
-        cantidad: [0,[Validators.required]],
-        precioUnitario: [0,[Validators.required]]
-      }]) 
+      items: new FormArray([])
     })
   }
   get f() { return this.form.controls; }
-    get t() { return this.f.items as FormArray; }
+  get t() { return this.f.items as FormArray; }
   get detalles(): FormGroup[] {
     return this.t.controls as FormGroup[];;
   }
-  CategorySave(): void {
+  facturaSave(): void {
+    console.log(this.form.value)
     if (this.form.invalid)
       return Object.values(this.form.controls).forEach(controls => controls.markAllAsTouched())
-    const categoryId = this.form.get('categoryId').value
-    if (categoryId > 0)
-      this.facturaEdit(categoryId)
+    const facturaId = this.form.get('facturaID').value
+    if (facturaId > 0)
+      this.facturaEdit(facturaId)
     else
-      this.categoryRegister()
+      this.facturaRegister()
 
   }
 
-  categoryRegister(): void {
+  facturaRegister(): void {
     this.facturaService.CategoryRegister(this.form.value).subscribe(resp => {
       if (resp.isSucces) {
         this.alert.success('Excelente', resp.message)
@@ -91,7 +93,32 @@ export class FacturaManageComponent implements OnInit {
         this.alert.warn('Atencion', resp.message)
     }))
   }
-  addItem(){
+  addItem() {
 
+    this.t.push(this.fb.group({
+      descripcion: ['', [Validators.required]],
+      cantidad: [1, [Validators.required, Validators.pattern(/^-?\d+$/)]],
+      precioUnitario: ['0', [Validators.required]]
+    }));
+  }
+  removeItem(indice: number) {
+    this.t.removeAt(indice);
+  }
+  resetearItems() {
+    this.t.reset();
+  }
+  validarNumeroEntero(indice: number, event: any) {
+    const input = event.target as HTMLInputElement;
+    const valor = input.value;
+
+    // Eliminar cualquier caracter no numérico o punto decimal
+    const valorSinDecimal = valor.replace(/[^0-9]/g, '');
+
+    // Asignar el valor ajustado de vuelta al input
+    input.value = valorSinDecimal;
+    var valores = this.detalles[indice].value as DetalleFactura
+    valores.cantidad = parseInt(valorSinDecimal)
+    // Actualizar el valor del FormControl
+    this.detalles[indice].setValue(valores);
   }
 }

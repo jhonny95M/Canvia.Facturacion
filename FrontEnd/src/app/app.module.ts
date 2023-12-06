@@ -15,6 +15,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CUSTOM_DATE_FORMATS } from 'src/static-data/configs';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button'
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent, CustomLayoutAuthComponent],
@@ -29,7 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     VexModule,
     CustomLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule
   ],
   bootstrap: [AppComponent],
   providers:[

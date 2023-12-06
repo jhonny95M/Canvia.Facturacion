@@ -71,7 +71,7 @@ export class FacturaListComponent implements OnInit {
     openDialogRegister(){
       this._dialog.open(FacturaManageComponent,{
         disableClose:true,
-        width:'800px'
+        width:'1000px'
       }).afterClosed().subscribe(res=>{
         if(res)this.formatGetInputs()
       })
