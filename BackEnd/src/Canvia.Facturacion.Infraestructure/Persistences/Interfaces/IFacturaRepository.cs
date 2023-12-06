@@ -2,13 +2,14 @@
 using Canvia.Facturacion.Domain.EntitiesEntityFramework;
 using Canvia.Facturacion.Infraestructure.Commons.Bases.Request;
 using Canvia.Facturacion.Infraestructure.Commons.Bases.Response;
+using Canvia.Facturacion.Infraestructure.Dtos;
 using FacturaDetalle = Canvia.Facturacion.Domain.EntitiesAdoNet.FacturaDetalle;
 
 namespace Canvia.Facturacion.Infraestructure.Persistences.Interfaces;
 
 public interface IFacturaRepository
 {    
-    Task<BaseEntityResponse<FacturaCabecera>> ObtenerTodasAsync(BaseFiltersRequest filters);
+    Task<BaseEntityResponse<FacturaCabeceraEntityDto>> ObtenerTodasAsync(BaseFiltersRequest filters);
 
     Task<FacturaCabeceraAdoNet> ObtenerPorIdAsync(int facturaId);
     Task<IEnumerable<FacturaDetalle>> ObtenerDetallePorIdAsync(int facturaId);

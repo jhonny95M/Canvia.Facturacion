@@ -2,6 +2,7 @@
 using Canvia.Facturacion.Infraestructure.Commons.Bases.Request;
 using Canvia.Facturacion.Infraestructure.Commons.Bases.Response;
 using Canvia.Facturacion.Infraestructure.Context;
+using Canvia.Facturacion.Infraestructure.Dtos;
 using Canvia.Facturacion.Infraestructure.Persistences.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -143,17 +144,31 @@ public class FacturaRepository : AbstractGenericRepository<Domain.EntitiesEntity
         return factura!;
     }
 
-    public async Task<BaseEntityResponse<Domain.EntitiesEntityFramework.FacturaCabecera>> ObtenerTodasAsync(BaseFiltersRequest filters )
+    public async Task<BaseEntityResponse<FacturaCabeceraEntityDto>> ObtenerTodasAsync(BaseFiltersRequest filters )
     {
-        var response = new BaseEntityResponse<Domain.EntitiesEntityFramework.FacturaCabecera>();
+        var response = new BaseEntityResponse<FacturaCabeceraEntityDto>();
         
+
+
         var facturas = GetEntityQuery(includes: new Expression<Func<Domain.EntitiesEntityFramework.FacturaCabecera, object>>[]{f => f.Cliente!});
+        var newfacturas = from f in facturas
+                        select new FacturaCabeceraEntityDto 
+                        {
+                            ClienteId=f.ClienteId,
+                            Apellido=f.Cliente!.Apellido,
+                            Descripcion=f.Descripcion,
+                            Estado=f.Estado,
+                            FacturaId=f.FacturaId,
+                            FechaEmision=f.FechaEmision,
+                            Nombre=f.Cliente.Nombre,
+                            Total = f.Total
+                        };
         if (filters.NumFilter is not null && !string.IsNullOrEmpty(filters.TextFilter))
         {
             switch (filters.NumFilter)
             {
                 case 1:
-                    facturas = facturas.Where(c => c.Descripcion!.Contains(filters.TextFilter));
+                    newfacturas = newfacturas.Where(c => c.Descripcion!.Contains(filters.TextFilter));
                     break;
                 case 2:
                     //categories = categories.Where(c => c.Description!.Contains(filters.TextFilter));
@@ -161,12 +176,12 @@ public class FacturaRepository : AbstractGenericRepository<Domain.EntitiesEntity
             }
         }
         if (filters.StateFilter is not null)
-            facturas = facturas.Where(c => c.Estado==filters.StateFilter);
+            newfacturas = newfacturas.Where(c => c.Estado==filters.StateFilter);
         if (!string.IsNullOrEmpty(filters.StartDate) && !string.IsNullOrEmpty(filters.EndDate))
-            facturas = facturas.Where(c => c.FechaEmision >= Convert.ToDateTime(filters.StartDate) && c.FechaEmision <= Convert.ToDateTime(filters.EndDate).AddDays(1));
+            newfacturas = newfacturas.Where(c => c.FechaEmision >= Convert.ToDateTime(filters.StartDate) && c.FechaEmision <= Convert.ToDateTime(filters.EndDate).AddDays(1));
         if (filters.Sort is null) filters.Sort = nameof(FacturaCabeceraAdoNet.FacturaID);
-        response.TotalRecords = await facturas.CountAsync();
-        var query = Ordering(filters, facturas, !(bool)filters.Download!);        
+        response.TotalRecords = await newfacturas.CountAsync();
+        var query = Ordering(filters, newfacturas, !(bool)filters.Download!);        
         response.Items = await query.ToListAsync();
         return response;
     }

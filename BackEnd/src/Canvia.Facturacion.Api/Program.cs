@@ -1,3 +1,4 @@
+using Canvia.Facturacion.Api.Middlewares;
 using Canvia.Facturacion.Application.Extensions;
 using Canvia.Facturacion.Infraestructure.Extensions;
 
@@ -7,6 +8,8 @@ var cors = "cors";
 // Add services to the container.
 builder.Services.AddInjectionInfraestructure(configuration)
     .AddInjectionApplication(configuration);
+
+builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -37,6 +40,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.MapControllers();
 

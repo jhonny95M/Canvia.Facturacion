@@ -51,10 +51,11 @@ const tableColumns:TableColumn<Factura>[]=[
         label:'Nombre Cliente',
         property:'nombre',
         type:'text',
-        cssClasses:['font-medium','w-10']
+        cssClasses:['font-medium','w-10'],
+        
     },
     {
-        label:'Nombre Cliente',
+        label:'Apellido Cliente',
         property:'apellido',
         type:'text',
         cssClasses:['font-medium','w-10']
