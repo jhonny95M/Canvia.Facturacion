@@ -1,5 +1,7 @@
 // Módulo de clientes
 
+import { MatDateFormats } from "@angular/material/core";
+
 export const tipoPersonas = [
     { value: 1, label: 'Persona Natural' },
     { value: 2, label: 'Persona Jurídica' }
@@ -72,6 +74,22 @@ export const statesSelect = [
     { value: 1, label: 'Activo' },
     { value: 0, label: 'Inactivo' }
 ];
+
+export const clientesSelect = [
+    
+    { clienteID: 1, nombre: 'JJ',apellido:'Malpartida' }
+];
+export const CUSTOM_DATE_FORMATS: MatDateFormats = {
+    parse: {
+      dateInput: 'DD/MM/YYYY',
+    },
+    display: {
+      dateInput: 'DD/MM/YYYY',
+      monthYearLabel: 'MMM YYYY',
+      dateA11yLabel: 'LL',
+      monthYearA11yLabel: 'MMMM YYYY',
+    },
+  };
 
 export const accessRoles = [
     { value: 1, label: 'Master' },

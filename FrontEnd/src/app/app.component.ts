@@ -12,6 +12,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Style, StyleService } from '../@vex/services/style.service';
 import { ConfigName } from '../@vex/interfaces/config-name.model';
 import icCategory from "@iconify/icons-ic/twotone-category";
+import icFactura from "@iconify/icons-ic/baseline-line-weight";
 
 @Component({
   selector: 'vex-root',
@@ -73,6 +74,12 @@ export class AppComponent {
         label: 'Categorias',
         route: 'categorias',
         icon: icCategory
+      },
+      {
+        type: 'link',
+        label: 'Facturas',
+        route: 'facturas',
+        icon: icFactura
       }
     ];
   }

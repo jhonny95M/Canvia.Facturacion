@@ -1,0 +1,100 @@
+<form (ngSubmit)="CategorySave()" [formGroup]="form" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+        <h2 class="headline m-0 text-xl text-accent" fxFlex="auto">
+            <strong>Gestión de factura</strong>
+        </h2>
+        <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+            <mat-icon [icIcon]="icClose"></mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <div fxLayout="row" fxLayoutGap="16px">
+            <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>cliente</mat-label>
+                <mat-select formControlName="clienteID">
+                    <mat-option *ngFor="let clie of configs.clientesSelect" [value]="clie.clienteID">{{clie.nombre}}
+                        {{clie.apellido}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('clienteID').hasError('required')">
+                    El campo cliente es requerido.
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutGap="16px">
+            <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Descripcion</mat-label>
+                <input matInput formControlName="descripcion">
+                <mat-error *ngIf="form.get('descripcion').hasError('required')">
+                    El Campo descripción es requerido.
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-form-field appearance="outline" fxFlex="100%">
+                <mat-label>F. Emisón</mat-label>
+                <input formControlName="fechaEmision" matInput [matDatepicker]="picker2">
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix  [for]="picker2" ></mat-datepicker-toggle>
+                <mat-datepicker #picker2 color="primary"></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div>
+            <div class="demo-button-container">
+                <button mat-raised-button (click)="addItem()" class="demo-button">
+                  Add data
+                </button>
+                
+              </div>
+              
+        </div>
+        <div>
+            <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com --> 
+<div class="flex flex-col">
+    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+        <div class="overflow-hidden">
+          <table class="min-w-full text-center text-sm font-light">
+            <thead class="border-b font-medium dark:border-neutral-500">
+              <tr>
+                <th scope="col" class="px-6 py-2">#</th>
+                <th scope="col" class="px-6 py-2">Descripcion</th>
+                <th scope="col" class="px-6 py-2">Cantidad</th>
+                <th scope="col" class="px-6 py-2">Precio Unit.</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr class="border-b dark:border-neutral-500" *ngFor="let item of detalles;let i = index" >
+                <td class="whitespace-nowrap px-6 py-2 font-medium">{{(i+1)}}</td>
+                <td class="whitespace-nowrap px-6 py-2 ">{{item.descripcion}}</td>
+                <td class="whitespace-nowrap px-6 py-2">{{item.cantidad}}</td>
+                <td class="whitespace-nowrap px-6 py-2">
+                    <div class="relative mb-3" data-te-input-wrapper-init>
+                        <input formControlName="precioUnitario" 
+                          type="number"
+                          class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                          id="exampleFormControlInputNumber"
+                          placeholder="Example label" />
+                        <label
+                          for="exampleFormControlInputNumber"
+                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                          >Precio
+                        </label>
+                      </div>
+                    </td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+        </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button type="button" mat-button mat-dialog-close>CANCELAR</button>
+        <button type="submit" color="purple" class="bg-accent text-accent-contrast" mat-button
+            [disabled]="!form.valid">GUARDAR</button>
+    </mat-dialog-actions>
+</form>

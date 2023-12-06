@@ -1,25 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AlertService } from '@shared/services/alert.service';
+import { CommonApi } from '../responses/common/common.response';
 import { Observable } from 'rxjs';
-import { Category, CategoryApi } from '../responses/category/category.response';
 import { environment as env } from "src/environments/environment";
-import { endpoint } from '@shared/apis/endpoint';
-import { ListCategoryRequest } from '../requests/category/list-category.request';
+import { endpointFacturacion } from '@shared/apis/endpoint';
+import { ListFacturaRequest } from '../requests/category/list-factura.request';
 import { map } from 'rxjs/operators';
-import { CategoryRequest } from '../requests/category/category.request';
 import { ApiResponse } from '../commons/response.interface';
+import { FacturaRequest } from '../requests/factura/factura.request';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
+export class FacturaService {
 
-  constructor(private http: HttpClient, private alert: AlertService) {
-  }
-  GetAll(size, sort, order, page, getInputs): Observable<CategoryApi> {
-    const requestUrl = `${env.api}${endpoint.LIST_CATEGORIES}`
-    const params: ListCategoryRequest = new ListCategoryRequest(
+  constructor(private http: HttpClient, private alert: AlertService) { }
+  GetAll(size, sort, order, page, getInputs): Observable<CommonApi> {
+    const params: ListFacturaRequest = new ListFacturaRequest(
       page + 1,
       order,
       sort,
@@ -30,10 +28,12 @@ export class CategoryService {
       getInputs.startDate,
       getInputs.endDate
     )
-    return this.http.post<CategoryApi>(requestUrl, params).pipe(
-      map((data: CategoryApi) => {
+    const requestUrl = `${env.api}${endpointFacturacion.ALL}${params.toQueryString()}`
+    
+    return this.http.get<CommonApi>(requestUrl).pipe(
+      map((data: CommonApi) => {
         data.data.items.forEach(function (e: any) {
-          switch (e.state) {
+          switch (e.Estado) {
             case 0:
               e.badgeColor = 'text-gray bg-gray-light'
               break;
@@ -49,26 +49,26 @@ export class CategoryService {
       })
     )
   }
-  CategoryRegister(category: CategoryRequest): Observable<ApiResponse> {
-    const requestUrl = `${env.api}${endpoint.CATEGORY_REGISTER}`
+  CategoryRegister(category: FacturaRequest): Observable<ApiResponse> {
+    const requestUrl = `${env.api}${endpointFacturacion.COMMON}`
     return this.http.post(requestUrl, category).pipe(
       map((resp: ApiResponse) => resp)
     )
   }
-  CategoryById(id: number): Observable<Category> {
-    const requesUrl = `${env.api}${endpoint.CATEGORY_BY_ID}${id}`
+  FacturaById(id: number): Observable<FacturaDetallada> {
+    const requesUrl = `${env.api}${endpointFacturacion.COMMON}${id}`
     return this.http.get(requesUrl).pipe(
       map((resp: ApiResponse) => resp.data)
     )
   }
-  CategoryEdit(id: number, category: CategoryRequest): Observable<ApiResponse> {
-    const requestUrl = `${env.api}${endpoint.CATEGORY_EDIT}${id}`
+  FacturaEdit(id: number, category: FacturaRequest): Observable<ApiResponse> {
+    const requestUrl = `${env.api}${endpointFacturacion.COMMON}${id}`
     return this.http.put(requestUrl, category).pipe(
       map((resp: ApiResponse) => resp)
     )
   }
   CategoryRemove(id: number): Observable<void> {
-    const requesUrl = `${env.api}${endpoint.CATEGORY_REMOVE}${id}`
+    const requesUrl = `${env.api}${endpointFacturacion.COMMON}${id}`
     return this.http.delete(requesUrl).pipe(
       map((resp: ApiResponse) => {
         if (resp.isSucces) this.alert.success('Excelente', resp.message)

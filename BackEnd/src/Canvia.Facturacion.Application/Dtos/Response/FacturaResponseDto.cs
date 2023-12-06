@@ -10,4 +10,5 @@ public record FacturaResponseDto
     public string? Descripcion { get; set; }
     public decimal? Total { get; set; }
     public byte Estado { get; set; }
+    public string EstadoFactura { get; set; } = "";
 }

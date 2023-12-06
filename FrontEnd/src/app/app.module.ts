@@ -12,6 +12,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CustomLayoutAuthComponent } from './custom-layout-auth/custom-layout-auth.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { CUSTOM_DATE_FORMATS } from 'src/static-data/configs';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent, CustomLayoutAuthComponent],
@@ -25,8 +28,15 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     MatInputModule,
     MatFormFieldModule,
     VexModule,
-    CustomLayoutModule
+    CustomLayoutModule,
+    ReactiveFormsModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers:[
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }, // Cambia 'es-ES' por tu idioma
+  { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+  ]
 })
 export class AppModule { }
+
+

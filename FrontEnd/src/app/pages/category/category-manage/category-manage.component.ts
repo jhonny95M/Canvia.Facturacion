@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from '@shared/services/alert.service';
 import { CategoryService } from 'src/app/services/category.service';
-import { th, tr } from 'date-fns/locale';
 
 @Component({
   selector: 'vex-category-manage',

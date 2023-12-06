@@ -1,3 +1,5 @@
+import { CommonApi } from "../common/common.response";
+
 export interface Category{
     categoryId: number;
     name: string;
@@ -6,8 +8,8 @@ export interface Category{
     state: number;
     stateCategory?: string;
 }
-export interface CategoryApi
+export interface CategoryApi extends CommonApi
 {
-    data:any
-    totalRecords:number
+    // data:any
+    // totalRecords:number
 }

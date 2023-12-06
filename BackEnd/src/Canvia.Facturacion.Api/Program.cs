@@ -3,7 +3,7 @@ using Canvia.Facturacion.Infraestructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
-
+var cors = "cors";
 // Add services to the container.
 builder.Services.AddInjectionInfraestructure(configuration)
     .AddInjectionApplication(configuration);
@@ -13,8 +13,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: cors,
+        builder =>
+        {
+            builder.WithOrigins("*");
+            builder.AllowAnyMethod();
+            builder.AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
 
+app.UseCors(cors);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

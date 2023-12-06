@@ -21,6 +21,13 @@ const childrenRoutes: VexRoutes = [
     }
   },
   {
+    path:"facturas",
+    loadChildren:()=>import('./pages/factura/factura.module').then(c=>c.FacturaModule),
+    data:{
+      containerEnabled:true
+    }
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }

@@ -161,7 +161,7 @@ public class FacturaRepository : AbstractGenericRepository<Domain.EntitiesEntity
             }
         }
         if (filters.StateFilter is not null)
-            facturas = facturas.Where(c => c.Estado.Equals(filters.StateFilter));
+            facturas = facturas.Where(c => c.Estado==filters.StateFilter);
         if (!string.IsNullOrEmpty(filters.StartDate) && !string.IsNullOrEmpty(filters.EndDate))
             facturas = facturas.Where(c => c.FechaEmision >= Convert.ToDateTime(filters.StartDate) && c.FechaEmision <= Convert.ToDateTime(filters.EndDate).AddDays(1));
         if (filters.Sort is null) filters.Sort = nameof(FacturaCabeceraAdoNet.FacturaID);
