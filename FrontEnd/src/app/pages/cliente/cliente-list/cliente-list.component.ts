@@ -3,31 +3,30 @@ import { CustomTitleService } from '@shared/services/custom-title.service';
 import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
 import { stagger40ms } from 'src/@vex/animations/stagger.animation';
-import { CategoryService } from 'src/app/services/category.service';
-import { componentSettings } from './category-list-config';
-import { th, tr } from 'date-fns/locale';
+import { ClienteService } from 'src/app/services/cliente.service';
+import { componentSettings } from './cliente-list-config';
 import { DatesFilter } from '@shared/functions/actions';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { CategoryManageComponent } from '../category-manage/category-manage.component';
-import { CategoryApi } from 'src/app/responses/category/category.response';
+import { ClienteManageComponent } from '../cliente-manage/cliente-manage.component';
 import Swal from 'sweetalert2';
+import { CommonApi } from 'src/app/responses/common/common.response';
 
 @Component({
   selector: 'vex-category-list',
-  templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.scss'],
+  templateUrl: './cliente-list.component.html',
+  styleUrls: ['./cliente-list.component.scss'],
   animations: [
     stagger40ms,
     scaleFadeIn400ms,
     fadeInRight400ms
   ]
 })
-export class CategoryListComponent implements OnInit {
+export class ClienteListComponent implements OnInit {
 
   component
   constructor(
     customTitle: CustomTitleService,
-    public categoryService: CategoryService,
+    public clienteService: ClienteService,
     public _dialog:MatDialog
   ) {
     customTitle.set('Categorias')
@@ -72,7 +71,7 @@ export class CategoryListComponent implements OnInit {
     this.component.getInputs = inputs
   }
   openDialogRegister(){
-    this._dialog.open(CategoryManageComponent,{
+    this._dialog.open(ClienteManageComponent,{
       disableClose:true,
       width:'400px'
     }).afterClosed().subscribe(res=>{
@@ -91,10 +90,10 @@ export class CategoryListComponent implements OnInit {
         break;
     }
   }
-  categoryEdit(category: CategoryApi) {
+  categoryEdit(category: CommonApi) {
     const dialogConfig=new MatDialogConfig()
     dialogConfig.data=category
-    let dialogRef=this._dialog.open(CategoryManageComponent,{
+    let dialogRef=this._dialog.open(ClienteManageComponent,{
       data:dialogConfig,
       disableClose:true,
       width:'400px'
@@ -117,7 +116,7 @@ export class CategoryListComponent implements OnInit {
       width:430
     }).then(result=>{
       if(result.isConfirmed){
-        this.categoryService.CategoryRemove(category.categoryId).subscribe(()=>this.formatGetInputs())
+        this.clienteService.CategoryRemove(category.categoryId).subscribe(()=>this.formatGetInputs())
       }
     })
   }

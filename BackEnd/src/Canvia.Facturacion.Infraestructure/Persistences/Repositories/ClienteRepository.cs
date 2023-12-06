@@ -1,5 +1,6 @@
 ﻿using Canvia.Facturacion.Domain.EntitiesAdoNet;
 using Canvia.Facturacion.Infraestructure.Commons.Bases.Request;
+using Canvia.Facturacion.Infraestructure.Commons.Bases.Response;
 using Canvia.Facturacion.Infraestructure.Persistences.Interfaces;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -78,7 +79,7 @@ public class ClienteRepository : IClienteRepository
         return cliente!;
     }
 
-    public async Task<IEnumerable<Cliente>> ObtenerTodosAsync(BaseFiltersRequest? filters = null)
+    public async Task<BaseEntityResponse<Cliente>> ObtenerTodosAsync(BaseFiltersRequest? filters = null)
     {
         List<Cliente> clientes = new List<Cliente>();
 
@@ -99,6 +100,10 @@ public class ClienteRepository : IClienteRepository
             }
         }
 
-        return clientes;
+        return new BaseEntityResponse<Cliente>
+        {
+            Items = clientes,
+            TotalRecords=1
+        };
     }
 }

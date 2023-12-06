@@ -1,5 +1,5 @@
 import { TableColumn } from "src/@vex/interfaces/table-column.interface";
-import { Category } from "src/app/responses/category/category.response";
+import { Cliente } from "src/app/responses/category/category.response";
 import icCategory from "@iconify/icons-ic/twotone-category";
 import { ListTableMenu } from "src/app/commons/list-table-menu.interface";
 import icViewHeadline from "@iconify/icons-ic/twotone-view-headline";

@@ -20,6 +20,12 @@ namespace Canvia.Facturacion.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            var response = await clienteApplication.GetAll(null);
+            return Ok(response);
+        }
+        [HttpGet("select")]
+        public async Task<IActionResult> GetSelect()
+        {
             var response = await clienteApplication.SelectClientes();
             return Ok(response);
         }

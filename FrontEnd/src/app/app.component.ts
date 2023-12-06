@@ -63,16 +63,16 @@ export class AppComponent {
 
 
     this.navigationService.items = [
+      // {
+      //   type: 'link',
+      //   label: 'Estadísticas',
+      //   route: 'estadisticas',
+      //   icon: icDashboard
+      // },
       {
         type: 'link',
-        label: 'Estadísticas',
-        route: 'estadisticas',
-        icon: icDashboard
-      },
-      {
-        type: 'link',
-        label: 'Categorias',
-        route: 'categorias',
+        label: 'Clientes',
+        route: 'clientes',
         icon: icCategory
       },
       {

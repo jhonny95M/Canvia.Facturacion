@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CategoryListComponent } from './category-list/category-list.component';
+import { ClienteListComponent } from './cliente-list/cliente-list.component';
 
 const routes: Routes = [
   {
     path:'',
-    component:CategoryListComponent,
+    component:ClienteListComponent,
     data:{
       scrollDisabled:true,
       toolbarShadowEnabled:true
@@ -17,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CategoryRoutingModule { }
+export class ClienteRoutingModule { }

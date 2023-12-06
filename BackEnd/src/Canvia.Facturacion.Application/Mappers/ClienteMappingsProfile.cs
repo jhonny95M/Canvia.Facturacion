@@ -9,11 +9,18 @@ public sealed class ClienteMappingsProfile : Profile
 {
     public ClienteMappingsProfile()
     {
-        CreateMap<Cliente, ClienteResponseDto>()
-            .ReverseMap();
         CreateMap<BaseEntityResponse<Cliente>, BaseEntityResponse<ClienteResponseDto>>()
             .ReverseMap();
+        CreateMap<Cliente, ClienteResponseDto>()
+            .ReverseMap();
+
         CreateMap<Cliente, ClienteSelectResponseDto>()
+            .ReverseMap();
+        CreateMap<BaseEntityResponse<Cliente>, BaseEntityResponse<ClienteSelectResponseDto>>()
+          .ReverseMap();
+        CreateMap<Cliente, ClienteSelectResponseDto>()
+            .ReverseMap();
+        CreateMap<IEnumerable<Cliente>,List<ClienteSelectResponseDto>>()
             .ReverseMap();
     }
 }

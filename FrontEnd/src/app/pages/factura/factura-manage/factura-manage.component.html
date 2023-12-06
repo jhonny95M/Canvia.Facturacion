@@ -12,7 +12,7 @@
             <mat-form-field appearance="outline" fxFlex="100">
                 <mat-label>cliente</mat-label>
                 <mat-select formControlName="clienteID">
-                    <mat-option *ngFor="let clie of configs.clientesSelect" [value]="clie.clienteID">{{clie.nombre}}
+                    <mat-option *ngFor="let clie of clientesSelect" [value]="clie.clienteID">{{clie.nombre}}
                         {{clie.apellido}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('clienteID').hasError('required')">

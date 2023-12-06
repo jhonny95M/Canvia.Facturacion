@@ -3,23 +3,9 @@
         <div class="flex items-center justify-between" vexContainer>
             <h2 class="headline text-primary-contrast m-0 flex items-center w-full max-w-xxxl mr-6">
                 <ic-icon @scaleIn [icon]="component.icCategory" class="hidden sm:block"></ic-icon>
-                <span @fadeInRight class="ml-4 block">Gestión de Categorias</span>
+                <span @fadeInRight class="ml-4 block">Gestión de Clientes</span>
             </h2>
-            <div class="flex items-center justify-end w-full">
-                <vex-search-box
-                [searchOptions]="component.searchOptions"
-                (search)="search($event)"></vex-search-box>
-                <div class="">
-                    <button mat-icon-button
-                    matTooltip="Filtro por rango de fechas"
-                    type="button"
-                    class="ml-8 text-primary-contrast"
-                    [ngClass]="{'extra-filters-active':component.filters_dates_active}"
-                    (click)="dateFilterOpen()">
-                <mat-icon [icIcon]="component.icCalendarMonth"></mat-icon>
-                </button>
-                </div>
-            </div>
+            
         </div>
     </div>
     <div class="-mt-14 pt-0 overflow-hidden flex" vexContainer>
@@ -33,7 +19,7 @@
                 (filterChange)="setData($event)"
                 [items]="component.menuItems"></vex-list-table-menu>
                 <div class="card h-full overflow-hidden flex-auto">
-                    <vex-list-table (rowClick)="rowClick($event)" [service]="categoryService"
+                    <vex-list-table (rowClick)="rowClick($event)" [service]="clienteService"
                         [columns]="component.tableColumns" [sortBy]="component.initialSort"
                         [getInputs]="component.getInputs"
                         [sortDir]="component.initialSortDir" [buttonLabel]="component.buttonLabel"></vex-list-table>

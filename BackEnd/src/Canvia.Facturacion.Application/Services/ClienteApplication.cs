@@ -45,7 +45,7 @@ namespace Canvia.Facturacion.Application.Services
             if (clientes is not null)
             {
                 response.IsSucces = true;
-                response.Data = mapper.Map<IEnumerable<ClienteSelectResponseDto>>(clientes);
+                response.Data = mapper.Map<IEnumerable<ClienteSelectResponseDto>>(clientes.Items);
                 response.Message = ReplyMessage.MESSAGE_QUERY;
             }
             else

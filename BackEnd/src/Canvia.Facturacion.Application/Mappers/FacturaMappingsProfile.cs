@@ -19,7 +19,7 @@ public sealed class FacturaMappingsProfile : Profile
         CreateMap<BaseEntityResponse<FacturaCabeceraAdoNet>, BaseEntityResponse<FacturaCabeceraResponseDto>>()
             .ReverseMap();
         CreateMap<BaseEntityResponse<FacturaCabecera>, BaseEntityResponse<FacturaResponseDto>>()
-            .ReverseMap();
+            .ReverseMap();       
         CreateMap<FacturaCabecera, FacturaResponseDto>()
             .ForMember(c => c.Nombre, c => c.MapFrom(c => c.Cliente!.Nombre))
             .ForMember(c => c.Apellido, c => c.MapFrom(c => c.Cliente!.Apellido))

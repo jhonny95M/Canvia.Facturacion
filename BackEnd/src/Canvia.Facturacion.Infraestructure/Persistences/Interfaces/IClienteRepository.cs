@@ -1,11 +1,12 @@
 ﻿using Canvia.Facturacion.Domain.EntitiesAdoNet;
 using Canvia.Facturacion.Infraestructure.Commons.Bases.Request;
+using Canvia.Facturacion.Infraestructure.Commons.Bases.Response;
 
 namespace Canvia.Facturacion.Infraestructure.Persistences.Interfaces;
 
 public interface IClienteRepository
 {
-    Task<IEnumerable<Cliente>> ObtenerTodosAsync(BaseFiltersRequest? filters=null);
+    Task<BaseEntityResponse<Cliente>> ObtenerTodosAsync(BaseFiltersRequest? filters=null);
 
     Task<Cliente> ObtenerPorIdAsync(int clienteId);
 

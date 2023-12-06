@@ -14,8 +14,8 @@ const childrenRoutes: VexRoutes = [
     }
   },
   {
-    path:"categorias",
-    loadChildren:()=>import('./pages/category/category.module').then(c=>c.CategoryModule),
+    path:"clientes",
+    loadChildren:()=>import('./pages/cliente/cliente.module').then(c=>c.ClienteModule),
     data:{
       containerEnabled:true
     }

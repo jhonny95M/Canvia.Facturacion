@@ -4,14 +4,14 @@ import * as configs from '../../../../static-data/configs'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from '@shared/services/alert.service';
-import { CategoryService } from 'src/app/services/category.service';
+import { ClienteService } from 'src/app/services/cliente.service';
 
 @Component({
   selector: 'vex-category-manage',
-  templateUrl: './category-manage.component.html',
-  styleUrls: ['./category-manage.component.scss']
+  templateUrl: './cliente-manage.component.html',
+  styleUrls: ['./cliente-manage.component.scss']
 })
-export class CategoryManageComponent implements OnInit {
+export class ClienteManageComponent implements OnInit {
 
   icClose = icClose
   configs = configs
@@ -19,8 +19,8 @@ export class CategoryManageComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder,
     private alert: AlertService,
-    private categoryService: CategoryService,
-    public dialogRef: MatDialogRef<CategoryManageComponent>
+    private categoryService: ClienteService,
+    public dialogRef: MatDialogRef<ClienteManageComponent>
   ) { 
     this.initForm()
   }
@@ -28,17 +28,16 @@ export class CategoryManageComponent implements OnInit {
   ngOnInit(): void {
     if(this.data!=null){
       console.log(this.data)
-      this.CategoryById(this.data.data.categoryId)
+      this.CategoryById(this.data.data.clienteID)
     }
   }
   CategoryById(categoryId: number):void {
     this.categoryService.CategoryById(categoryId).subscribe(
       (res)=>{
         this.form.reset({
-          categoryId:res.categoryId,
-          name:res.name,
-          description:res.description,
-          state:res.state
+          clienteID:res.clienteID,
+          nombre:res.nombre,
+          apellido:res.apellido
         })
       }
     )

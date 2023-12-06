@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from '@shared/services/alert.service';
 import { FacturaService } from 'src/app/services/factura.service';
 import icDelete from '@iconify/icons-ic/round-delete';
+import { ClienteService } from 'src/app/services/cliente.service';
 
 
 @Component({
@@ -19,9 +20,11 @@ export class FacturaManageComponent implements OnInit {
   icDelete = icDelete
   configs = configs
   form: FormGroup
+  clientesSelect:[]
   constructor(@Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder,
     private alert: AlertService,
+    private clienteService:ClienteService,
     private facturaService: FacturaService,
     public dialogRef: MatDialogRef<FacturaManageComponent>) {
     this.initForm()
@@ -29,6 +32,11 @@ export class FacturaManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.clienteService.GetSelect().subscribe(
+      (response)=>{
+        this.clientesSelect=response.data
+      }
+    )
     if (this.data != null) {
       console.log(this.data)
       this.CategoryById(this.data.data.facturaId)

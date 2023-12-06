@@ -128,7 +128,6 @@ export class ListTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
                     this.spinner.show('modal-table');
                     const data= this.service!.GetAll(
                         size, sort, this.sort.direction, this.paginator.pageIndex, this.getInputs, this.id, this.id2);
-                        
                         return data;
                 }),
                 map(data => {
