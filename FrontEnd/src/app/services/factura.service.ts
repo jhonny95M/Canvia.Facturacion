@@ -67,7 +67,7 @@ export class FacturaService {
       map((resp: ApiResponse) => resp)
     )
   }
-  CategoryRemove(id: number): Observable<void> {
+  FacturaRemove(id: number): Observable<void> {
     const requesUrl = `${env.api}${endpointFacturacion.COMMON}${id}`
     return this.http.delete(requesUrl).pipe(
       map((resp: ApiResponse) => {

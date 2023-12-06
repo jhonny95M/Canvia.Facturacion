@@ -31,19 +31,25 @@ export class FacturaManageComponent implements OnInit {
   ngOnInit(): void {
     if (this.data != null) {
       console.log(this.data)
-      this.CategoryById(this.data.data.FacturaId)
+      this.CategoryById(this.data.data.facturaId)
     }
   }
-  CategoryById(categoryId: number): void {
-    this.facturaService.FacturaById(categoryId).subscribe(
+  CategoryById(facturaId: number): void {
+    this.facturaService.FacturaById(facturaId).subscribe(
       (res) => {
+        console.log(res)
         this.form.reset({
           facturaID:res.facturaID,
           clienteID: res.clienteID,
           fechaEmision: res.fechaEmision,
           descripcion: res.descripcion,
-          items: res.items
+          items: new FormArray([])
         })
+        res.items.forEach(item=>this.t.push(this.fb.group({
+          descripcion: [item.descripcion, [Validators.required]],
+          cantidad: [item.cantidad, [Validators.required, Validators.pattern(/^-?\d+$/)]],
+          precioUnitario: [item.precioUnitario, [Validators.required]]
+        })))        
       }
     )
   }
@@ -54,7 +60,7 @@ export class FacturaManageComponent implements OnInit {
       clienteID: [0, [Validators.required]],
       fechaEmision: ['', Validators.required],
       descripcion: [''],
-      items: new FormArray([])
+      items: new FormArray([],Validators.required)
     })
   }
   get f() { return this.form.controls; }

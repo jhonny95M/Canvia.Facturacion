@@ -33,7 +33,7 @@
                 (filterChange)="setData($event)"
                 [items]="component.menuItems"></vex-list-table-menu>
                 <div class="card h-full overflow-hidden flex-auto">
-                    <vex-list-table (rowClick)="rowClick($event)" [service]="categoryService"
+                    <vex-list-table (rowClick)="rowClick($event)" [service]="facturaService"
                         [columns]="component.tableColumns" [sortBy]="component.initialSort"
                         [getInputs]="component.getInputs"
                         [sortDir]="component.initialSortDir" [buttonLabel]="component.buttonLabel"></vex-list-table>

@@ -35,7 +35,7 @@ public sealed class FacturaApplication : IFacturaApplication
             await unitOfWork.Facturas.AnularFacturaAsync(idFactura);
             unitOfWork.Commit();
             response.IsSucces = true;
-            response.Message = ReplyMessage.MESSAGE_SAVE;
+            response.Message = ReplyMessage.MESSAGE_DELETE;
         }
         else {         
             response.IsSucces = false;

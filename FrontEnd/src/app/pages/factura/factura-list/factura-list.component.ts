@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CustomTitleService } from '@shared/services/custom-title.service';
 import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { scaleFadeIn400ms } from 'src/@vex/animations/scale-fade-in.animation';
@@ -24,7 +24,7 @@ import { FacturaManageComponent } from '../factura-manage/factura-manage.compone
 export class FacturaListComponent implements OnInit {
   component
   constructor(customTitle: CustomTitleService,
-    public categoryService: FacturaService,
+    public facturaService: FacturaService,
     public _dialog:MatDialog) {
       customTitle.set('Facturas')
      }
@@ -78,45 +78,46 @@ export class FacturaListComponent implements OnInit {
     }
     rowClick(e: any) {
       let action = e.action
-      let category = e.row
+      let factura = e.row
       switch (action) {
         case 'edit':
-          this.categoryEdit(category)
+          this.categoryEdit(factura)
           break;
         case 'remove':
-          this.categoryRemove(category)
+          this.facturaRemove(factura)
           break;
       }
     }
-    categoryEdit(category: CommonApi) {
-      // const dialogConfig=new MatDialogConfig()
-      // dialogConfig.data=category
-      // let dialogRef=this._dialog.open(CategoryManageComponent,{
-      //   data:dialogConfig,
-      //   disableClose:true,
-      //   width:'400px'
-      // })
-      // dialogRef.afterClosed().subscribe(res=>{
-      //   if(res)this.formatGetInputs()
-      // })
+    categoryEdit(factura: CommonApi) {
+      const dialogConfig=new MatDialogConfig()
+      dialogConfig.data=factura
+      let dialogRef=this._dialog.open(FacturaManageComponent,{
+        data:dialogConfig,
+        disableClose:true,
+        width:'1000px'
+      })
+      dialogRef.afterClosed().subscribe(res=>{
+        if(res)this.formatGetInputs()
+      })
     }
-    categoryRemove(category: any) {
-      // Swal.fire({
-      //   title:`¿Realmente  deseas eliminar la categoria ${category.name}?`,
-      //   text:'Se borrara de forma  permanente!',
-      //   icon:'warning',
-      //   showCancelButton:true,
-      //   focusCancel:true,
-      //   confirmButtonColor:'rgb(210,155,253)',
-      //   cancelButtonColor:'rgb(79,109,253)',
-      //   confirmButtonText:'Sí, eliminar',
-      //   cancelButtonText:'Cancelar',
-      //   width:430
-      // }).then(result=>{
-      //   if(result.isConfirmed){
-      //     this.categoryService.CategoryRemove(category.categoryId).subscribe(()=>this.formatGetInputs())
-      //   }
-      // })
+    facturaRemove(factura: any) {
+      console.log(factura)
+      Swal.fire({
+        title:`¿Realmente  deseas anular la factura N° ${factura.facturaId}?`,
+        text:'Se anulara de forma  permanente!',
+        icon:'warning',
+        showCancelButton:true,
+        focusCancel:true,
+        confirmButtonColor:'rgb(210,155,253)',
+        cancelButtonColor:'rgb(79,109,253)',
+        confirmButtonText:'Sí, eliminar',
+        cancelButtonText:'Cancelar',
+        width:430
+      }).then(result=>{
+        if(result.isConfirmed){
+          this.facturaService.FacturaRemove(factura.facturaId).subscribe(()=>this.formatGetInputs())
+        }
+      })
     }
 
 }
